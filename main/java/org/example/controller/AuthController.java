@@ -43,13 +43,13 @@ public class AuthController {
     private void LogIn() {
         System.out.print("Enter your name: ");
         String name = ComponentContainer.strScanner.nextLine();
-        System.out.print("Enter your phone: ");
-        String phone = ComponentContainer.strScanner.nextLine();
-        boolean isActive=authService.LogIn(name,phone);
+        System.out.print("Enter your id: ");
+        Integer id = ComponentContainer.strScanner.nextInt();
+        boolean isActive=authService.LogIn(id);
         if (!isActive){
             return;
         }else {
-            Student student = studentRepository.getStudentByPhone(phone);
+            Student student = studentRepository.getStudentById(id);
             ComponentContainer.currentUser=student;
             if(student.getRole().equals(StudentRole.USER)){
                 userController.start();

@@ -10,18 +10,18 @@ import org.springframework.stereotype.Component;
 public class InitDatabase {
     @Autowired
     private StudentRepository studentRepository;
-    public void adminInit(){
-        Student student=new Student();
-        student.setName("azizbek");
-        student.setSurname("aaa");
-        student.setPhone("123");
-        student.setRole(StudentRole.ADMIN);
-        student.setVisible(true);
-        student.setId(777);
-        StudentRepository studentRepository1=new StudentRepository();
-        Student phone = studentRepository1.getStudentByPhone(student.getPhone());
-        if(phone!=null){
-            studentRepository.save(student);
-        }
-    }
+//    public void adminInit(){
+//        Student student=new Student();
+//        student.setName("azizbek");
+//        student.setSurname("aaa");
+//        student.setPhone("123");
+//        student.setRole(StudentRole.ADMIN);
+//        student.setVisible(true);
+//        student.setId(777);
+//        StudentRepository studentRepository1=new StudentRepository();
+//        Student phone = studentRepository1.getStudentByPhone(student.getPhone());
+//        if(phone!=null){
+//            studentRepository.save(student);
+//        }
+//    }
 }

@@ -34,7 +34,6 @@ public class Database  {
                 "             phone varchar(12),\n" +
                 "             role varchar,\n"+
                 "             createdDate timestamp not null default now(),\n" +
-                "             status varchar(20) not null, \n" +
                 "             visible boolean default true\n" + ");";
 
         String book = "create table if not exists book(" +
@@ -58,19 +57,19 @@ public class Database  {
         execute(book);
         execute(studentBook);
     }
-    public void adminInit(){
-        Student student=new Student();
-        student.setName("azizbek");
-        student.setSurname("aaa");
-        student.setPhone("123");
-        student.setRole(StudentRole.ADMIN);
-        student.setVisible(true);
-        student.setId(777);
-        Student phone = studentRepository.getStudentByPhone(student.getPhone());
-        if(phone == null){
-            studentRepository.save(student);
-        }
-    }
+//    public void adminInit(){
+//        Student student=new Student();
+//        student.setName("azizbek");
+//        student.setSurname("aaa");
+//        student.setPhone("123");
+//        student.setRole(StudentRole.ADMIN);
+//        student.setVisible(true);
+//        student.setId(777);
+//        Student phone = studentRepository.getStudentById(student.getId()));
+//        if(phone == null){
+//            studentRepository.save(student);
+//        }
+//    }
 
     private void execute(String sql) {
         try (Connection connection = getConnection()) {

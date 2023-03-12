@@ -71,11 +71,11 @@ public class AdminController {
     }
 
     private void addBook() {
-        System.out.print("Enter title: ");
+        System.out.println("Enter title: ");
         String title = ComponentContainer.strScanner.nextLine();
-        System.out.print("Enter author: ");
+        System.out.println("Enter author: ");
         String author=ComponentContainer.strScanner.nextLine();
-        System.out.print("Enter amount: ");
+        System.out.println("Enter amount: ");
         int amount = ComponentContainer.intScanner.nextInt();
         boolean adding=adminService.addBook(title,author,amount);
         if(adding){

@@ -27,6 +27,7 @@ public class Config {
         dataSource.setPassword("azizbek");
         return dataSource;
     }
+    @Bean
     public JdbcTemplate getTemplate(){
         JdbcTemplate jdbcTemplate=new JdbcTemplate();
         jdbcTemplate.setDataSource(dataSource());
