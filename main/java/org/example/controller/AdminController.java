@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.Scanner;
 
 @Controller
 public class AdminController {
@@ -47,12 +48,13 @@ public class AdminController {
     }
 
     private void addStudent() {
-        System.out.print("Enter name: ");
-        String name = ComponentContainer.strScanner.nextLine();
-        System.out.print("Enter surname: ");
-        String surname = ComponentContainer.strScanner.nextLine();
-        System.out.print("Enter phone number: ");
-        String phone = ComponentContainer.strScanner.nextLine();
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("Enter name: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter surname: ");
+        String surname = scanner.nextLine();
+        System.out.println("Enter phone number: ");
+        String phone = scanner.nextLine();
         boolean adding= adminService.addStudent(name,surname,phone);
     }
 
@@ -71,10 +73,11 @@ public class AdminController {
     }
 
     private void addBook() {
+        Scanner scanner=new Scanner(System.in);
         System.out.println("Enter title: ");
-        String title = ComponentContainer.strScanner.nextLine();
+        String title = scanner.nextLine();
         System.out.println("Enter author: ");
-        String author=ComponentContainer.strScanner.nextLine();
+        String author=scanner.nextLine();
         System.out.println("Enter amount: ");
         int amount = ComponentContainer.intScanner.nextInt();
         boolean adding=adminService.addBook(title,author,amount);

@@ -1,16 +1,11 @@
 package org.example.repository;
 
-import org.example.db.Database;
 import org.example.dto.Student;
-import org.example.enums.StudentRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
-import java.time.LocalDate;
-import java.util.LinkedList;
 import java.util.List;
 @Repository
 public class StudentRepository {
@@ -28,13 +23,14 @@ public class StudentRepository {
         return update;
     }
     public Student getStudentByPhone(String id)  {
-        String sql="select*from student where phone="+id;
+        String sql="select*from student where phone='%s'";
+        String.format(sql, id);
         Student update = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(Student.class));
         return update;
     }
     public List<Student> getAll(){
         String sql="select*from student";
-        List<Student> update = (List<Student>) jdbcTemplate.queryForObject(sql,Student.class);
+        List<Student> update = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Student.class));
         return update;
     }
 
