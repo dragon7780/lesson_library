@@ -3,6 +3,7 @@ package org.example;
 import org.example.config.Config;
 import org.example.controller.AuthController;
 import org.example.db.Database;
+import org.example.db.InitDatabase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -12,8 +13,9 @@ public class Main {
         ApplicationContext context=new AnnotationConfigApplicationContext(Config.class);
         AuthController authController = (AuthController) context.getBean("authController");
         Database dataBase = (Database) context.getBean("database");
+        InitDatabase initDatabase=(InitDatabase) context.getBean("initDatabase");
         dataBase.initTable();
-        dataBase.adminInit();
+        initDatabase.adminInit();
         authController.start();
     }
 }

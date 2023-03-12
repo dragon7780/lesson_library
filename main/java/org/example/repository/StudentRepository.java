@@ -3,6 +3,8 @@ package org.example.repository;
 import org.example.db.Database;
 import org.example.dto.Student;
 import org.example.enums.StudentRole;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -11,23 +13,13 @@ import java.util.LinkedList;
 import java.util.List;
 @Repository
 public class StudentRepository {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     public int save(Student student){
-        Connection connection = Database.getConnection();
-        try {
-            Statement statement = connection.createStatement();
-            String sql=String.format("insert into student (name,surname,role,phone,createdDate,visible)" +
-                "values('%s','%s','%s','%s','%s','%s');",
-                student.getName(),student.getSurname(),student.getRole(),student.getCreatedDate(),student.getVisible());
-            int update = statement.executeUpdate(sql);
-            connection.close();
-            if(update==1){
-                return 1;
-            }else {
-                return 0;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String sql="insert into student (name,surname,role,phone,createdDate,visible) values('%s','%s','%s','%s',now())";
+        sql=String.format(sql,student.getName(),student.getSurname(),student.getRole(),student.getCreatedDate());
+        int update = jdbcTemplate.update(sql);
+        return update;
     }
     public Student getStudentByPhone(String name)  {
         Connection connection = Database.getConnection();
