@@ -36,7 +36,7 @@ public class AdminController {
                 case 3->deleteBook();
                 case 4->studentList();
                 case 5->addStudent();
-//                case 6->deleteStudent();
+                case 6->deleteStudent();
 //                case 7->stTakenBook();
 //                case 8->bookTaken();
                 default -> {
@@ -45,6 +45,12 @@ public class AdminController {
                 }
             }
         }
+    }
+
+    private void deleteStudent() {
+        System.out.print("Enter student id: ");
+        int id = ComponentContainer.intScanner.nextInt();
+        boolean deleting= adminService.deleteStudent(id);
     }
 
     private void addStudent() {
@@ -56,6 +62,9 @@ public class AdminController {
         System.out.println("Enter phone number: ");
         String phone = scanner.nextLine();
         boolean adding= adminService.addStudent(name,surname,phone);
+        if(!adding){
+            System.out.println("mazgiiii");
+        }
     }
 
     private void studentList() {

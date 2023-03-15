@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class AdminService {
     @Autowired
@@ -16,20 +18,16 @@ public class AdminService {
     @Autowired
     private StudentRepository studentRepository;
     public boolean addBook(String title, String author, Integer amount){
-        Book book = bookRepository.getBookByTitle(title, author);
-        if(book == null){
+        List<Book> bookByTitle = bookRepository.getBookByTitle(title, author);
+        if(bookByTitle.size()==0){
             Book book1=new Book();
             book1.setTitle(title);
             book1.setAuthor(author);
             book1.setAmount(amount);
             book1.setPublisherYear(LocalDate.now());
             book1.setVisible(true);
-            Integer save = bookRepository.save(book1);
-            if (save==1){
-                return true;
-            }else {
-                return false;
-            }
+            bookRepository.save(book1);
+            return true;
         }else {
             Boolean byTitle = bookRepository.changeBookByTitle(title, author, amount);
             if(byTitle){
@@ -53,20 +51,33 @@ public class AdminService {
             }
         }
     }
+    public boolean deleteStudent(int id){
+        Student studentById = studentRepository.getStudentById(id);
+        if (studentById == null){
+            return false;
+        }else {
+            int byId = studentRepository.deleteStudentById(id);
+            if(byId == 0){
+                return false;
+            }else {
+                return true;
+            }
+        }
+    }
 
     public boolean addStudent(String name, String surname, String phone) {
-        Student studentByPhone = studentRepository.getStudentByPhone(phone);
-        if (studentByPhone != null){
+        List<Student> studentByPhone = studentRepository.getStudentByPhone(phone);
+        if (studentByPhone.size() != 0){
             return false;
         }
         Student student=new Student();
         student.setName(name);
         student.setSurname(surname);
-        student.setRole(StudentRole.USER);
+        student.setRole("USER");
         student.setCreatedDate(LocalDate.now());
+        student.setPhone(phone);
         student.setVisible(true);
         studentRepository.save(student);
-
         return true;
     }
 }
