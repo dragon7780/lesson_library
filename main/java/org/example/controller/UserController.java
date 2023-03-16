@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.container.ComponentContainer;
 import org.example.dto.Book;
 import org.example.repository.BookRepository;
+import org.example.repository.StudentBookRepository;
 import org.example.sevice.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ public class UserController {
     private BookRepository bookRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private StudentBookRepository studentBookRepository;
     public void start() {
         boolean isTrue=true;
         while (isTrue){
@@ -25,6 +28,7 @@ public class UserController {
                 case 0-> isTrue=false;
                 case 1->bookList();
                 case 2->takeBook();
+                case 3->takenBook();
 //                case 3->takenBook();
 //                case 4->returnBook();
 //                case 5->history();
@@ -37,11 +41,15 @@ public class UserController {
         }
     }
 
+    private void takenBook() {
+        studentBookRepository.getAll().
+                forEach(System.out::println);
+    }
+
     private void takeBook() {
         System.out.print("Enter id:");
         int id = ComponentContainer.intScanner.nextInt();
         Boolean takeBook = userService.takeBook(id);
-
     }
 
     private void bookList() {

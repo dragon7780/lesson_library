@@ -4,6 +4,7 @@ import org.example.container.ComponentContainer;
 import org.example.dto.Book;
 import org.example.dto.Student;
 import org.example.repository.BookRepository;
+import org.example.repository.StudentBookRepository;
 import org.example.repository.StudentRepository;
 import org.example.sevice.AdminService;
 import org.example.sevice.UserService;
@@ -23,6 +24,8 @@ public class AdminController {
     private UserService userService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private StudentBookRepository studentBookRepository;
     public void start() {
         boolean isTrue=true;
         while (isTrue){
@@ -37,7 +40,7 @@ public class AdminController {
                 case 4->studentList();
                 case 5->addStudent();
                 case 6->deleteStudent();
-//                case 7->stTakenBook();
+                case 7->stTakenBook();
 //                case 8->bookTaken();
                 default -> {
                     System.out.println("Don't be mazgi");
@@ -47,12 +50,15 @@ public class AdminController {
         }
     }
 
+    private void stTakenBook() {
+        studentBookRepository.getAll().
+                forEach(System.out::println);
+    }
     private void deleteStudent() {
         System.out.print("Enter student id: ");
         int id = ComponentContainer.intScanner.nextInt();
         boolean deleting= adminService.deleteStudent(id);
     }
-
     private void addStudent() {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter name: ");
@@ -66,12 +72,10 @@ public class AdminController {
             System.out.println("mazgiiii");
         }
     }
-
     private void studentList() {
         List<Student> all = studentRepository.getAll();
         all.forEach(System.out::println);
     }
-
     private void deleteBook() {
         System.out.print("Enter book id: ");
         int id = ComponentContainer.intScanner.nextInt();
@@ -80,7 +84,6 @@ public class AdminController {
             System.out.println("Deleting is succesfully!!!");
         }
     }
-
     private void addBook() {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter title: ");
@@ -94,13 +97,11 @@ public class AdminController {
             System.out.println("Book succesfully added!!!");
         }
     }
-
     private void bookList() {
         List<Book> all = bookRepository.getAll();
         all.forEach(book ->
                 System.out.println(book.getId()+"  "+book.getTitle()+" "+book.getAuthor()+" "+ book.getAmount()));
     }
-
     public void menu(){
         String menu= """
                0 exit

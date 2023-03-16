@@ -31,7 +31,7 @@ public class BookRepository {
     }
     public List<Book> getAll(){
         String sql=String.format("select*from book where visible=true");
-        List<Book> bookList = jdbcTemplate.queryForList(sql, Book.class);
+        List<Book> bookList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Book.class));
         return bookList;
     }
     public List<Book> getBookByTitle(String title,String author){
@@ -39,7 +39,13 @@ public class BookRepository {
         List<Book> query = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
         return query;
     }
-    public Book getBookById(Integer id){
+    public List<Book> getBookById(Integer id){
+        String sql=String.format("select*from book where id="+id+" and visible=true");
+        List<Book> book = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
+
+        return book;
+    }
+    public Book getBookById1(Integer id){
         String sql=String.format("select*from book where id="+id+" and visible=true");
         Book book = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Book.class));
         return book;
@@ -65,7 +71,16 @@ public class BookRepository {
     }
 
     public void changeAmountById(int id) {
-        String sql="update book set amount=amount-1 where id='%s'";
-        jdbcTemplate.update(sql,Book.class);
+        Book book = getBookById1(id);
+        String sql="update book set amount=amount-1 where id="+id;
+        StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+        Metadata meta = new MetadataSources(ssr).getMetadataBuilder().build();
+        SessionFactory factory = meta.getSessionFactoryBuilder().build();
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(sql,book);
+        transaction.commit();
+        factory.close();
+        session.close();
     }
 }

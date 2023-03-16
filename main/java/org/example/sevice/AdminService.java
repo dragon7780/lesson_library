@@ -2,7 +2,6 @@ package org.example.sevice;
 
 import org.example.dto.Book;
 import org.example.dto.Student;
-import org.example.enums.StudentRole;
 import org.example.repository.BookRepository;
 import org.example.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class AdminService {
     }
 
     public boolean deleteBook(int id) {
-        Book bookById = bookRepository.getBookById(id);
+        List<Book> bookById = bookRepository.getBookById(id);
         if(bookById == null){
             return false;
         }else {

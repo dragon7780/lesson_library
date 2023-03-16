@@ -51,7 +51,7 @@ public class AuthController {
         }else {
             Student student = studentRepository.getStudentById(id);
             ComponentContainer.currentUser=student;
-            if(student.getRole().equals(StudentRole.USER)){
+            if(student.getRole().equals("USER")){
                 userController.start();
             }else {
                 adminController.start();

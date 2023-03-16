@@ -11,6 +11,7 @@
 
         <mapping class="org.example.dto.Book"/>
         <mapping class="org.example.dto.Student"/>
+        <mapping class="org.example.dto.StudentBook"/>
     </session-factory>
 
 </hibernate-configuration>
